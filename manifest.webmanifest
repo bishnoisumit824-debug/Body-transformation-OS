@@ -3,7 +3,7 @@
   "short_name": "Transform OS",
   "description": "16-week athletic transformation tracker: training, running, nutrition, recovery and progress.",
   "id": "./",
-  "start_url": "./",
+  "start_url": "transformation-os.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
