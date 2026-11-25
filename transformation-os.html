@@ -10,6 +10,9 @@
 <meta name="apple-mobile-web-app-title" content="Transformation OS">
 <meta name="description" content="Offline 16-week athletic transformation tracker: training, running, mess-food nutrition, recovery and progress.">
 <title>Transformation OS</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 <style>
 /* ===== Transformation OS — styles ===== */
 :root{
@@ -2690,6 +2693,13 @@ function makeIcon(size){
 }
 function setupInstall(){
   try {
+    /* Hosted build (GitHub Pages): static manifest, icons and sw.js sit next to the page. */
+    if (/^https?:$/.test(location.protocol) && document.querySelector('link[rel="manifest"]')){
+      if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+      return;
+    }
+    /* Opened as a lone file: drop the static links (they would 404) and generate everything at runtime. */
+    document.querySelectorAll('link[rel="manifest"],link[rel="apple-touch-icon"],link[rel="icon"]').forEach(l => l.remove());
     const i180 = makeIcon(180), i192 = makeIcon(192), i512 = makeIcon(512); if (!i180) return;
     const add = (rel, href, extra={}) => { const l = document.createElement('link'); l.rel = rel; l.href = href; for (const [k,v] of Object.entries(extra)) l.setAttribute(k, v); document.head.appendChild(l); };
     add('apple-touch-icon', i180, {sizes:'180x180'}); add('icon', i192, {type:'image/png'});
